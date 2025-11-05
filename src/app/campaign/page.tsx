@@ -1,4 +1,4 @@
-import StatBlock from "@/components/StatBlock";
+import StatBlock from "@/components/StatBlock/StatBlock";
 
 export default function CampaignPage() {
     return (

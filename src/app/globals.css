@@ -26,8 +26,31 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+.bg-main {
+    background: #20222c;
+}
+
+.grid-rows-text-and-button {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr;
+}
+
+.bg-progress-line {
+    background: #363e66;
+}
+
 .border-style {
     border: solid 3px var(--border-color)
+}
+
+.header-border {
+    border: solid 2px #4e4cb7;
+    border-radius: 12px;
+}
+
+.border-right {
+    border: 0 solid #4e4cb7;
+    border-right-width: 2px;
 }
 
 .absolute-centered {
@@ -35,6 +58,10 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.text-sm {
+    font-size: 12px;
 }
 
 .modal-background {
