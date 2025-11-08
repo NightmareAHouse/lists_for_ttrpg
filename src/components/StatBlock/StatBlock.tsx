@@ -1,8 +1,9 @@
 'use client'
 
 import {useState} from 'react';
-import Modal from "@/components/Modal";
 import ModalStatBlock from "@/components/StatBlock/ModalStatBlock";
+import {useCharacterStore} from "@/store/character";
+import StatRow from "@/components/StatBlock/StatRow";
 
 const secondStat: Record<string, string[]> = {
     'Сила': ['Атлетика'],
@@ -18,10 +19,10 @@ type StatBlock = {
 
 export default function StatBlock({name}: StatBlock) {
     const [mainStatValue, setMainStatValue] = useState(10)
-    const [updatedStatValue, setUpdatedStatValue] = useState(mainStatValue)
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const calculateStatValue = Math.floor((mainStatValue - 10) / 2)
+    const statValue = calculateStatValue > 0 ? `+${calculateStatValue}` : calculateStatValue
 
     const onClick = () => {
         setIsModalOpen(true)
@@ -29,15 +30,15 @@ export default function StatBlock({name}: StatBlock) {
 
     return (
         <>
-            <div className="flex gap-2 p-3 flex-col border-style" onClick={onClick}>
-                <span>{name}: {mainStatValue}</span>
+            <div className="flex text-md gap-2 p-3 flex-col border-style" onClick={onClick}>
+                <span>{name}: {mainStatValue} ({statValue})</span>
 
                 <div className="flex flex-col gap-2">
-                    <div>Спасбросок: {calculateStatValue}</div>
+                    <StatRow statValue={statValue}/>
 
-                    <div className='flex flex-wrap gap-2'>
+                    <div className='flex flex-col gap-2'>
                         {secondStat[name]?.map((skill) => (
-                            <div key={skill}>{skill}: {calculateStatValue}</div>
+                            <StatRow key={skill} name={skill} statValue={statValue}/>
                         ))}
                     </div>
                 </div>

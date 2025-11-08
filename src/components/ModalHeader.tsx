@@ -49,9 +49,9 @@ export default function ModalHeader({isOpen, setStateModal}: ModalHeaderType) {
                     <div onClick={clear}>Очистить</div>
                 </div>
 
-                <ProgressBar value={experience} maxValue={nextLevelExp}/>
+                <ProgressBar value={experience} maxValue={nextLevelExp} isSmallView />
 
-                <div className='grid grid-cols-3 grid-rows-4 w-full gap-4'>
+                <div className='grid grid-cols-3 text-center grid-rows-4 w-full gap-4'>
                     <div onClick={() => updateStateExperience('1')}>1</div>
                     <div onClick={() => updateStateExperience('2')}>2</div>
                     <div onClick={() => updateStateExperience('3')}>3</div>
