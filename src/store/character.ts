@@ -7,6 +7,8 @@ interface CharacterState {
     experience: number;
     nextLevelExp: number;
     bonusMastery: number;
+    classArmory: number;
+    speed: number;
 
     updateLevel: (level: number) => void;
     updateMaxHp: (maxHp: number) => void;
@@ -22,6 +24,8 @@ export const useCharacterStore = create<CharacterState>((set) => ({
     currentHp: 10,
     experience: 150,
     nextLevelExp: 300,
+    classArmory: 10,
+    speed: 30,
 
     updateLevel: (level) =>
         set({currentLevel: level}),
@@ -39,5 +43,11 @@ export const useCharacterStore = create<CharacterState>((set) => ({
         set((state) => ({experience: state.experience + newExperience})),
 
     updateNextLevelExp: (nextLevelExp) =>
-        set({nextLevelExp})
+        set({nextLevelExp}),
+
+    updateClassArmory: (classArmory: number) =>
+        set({classArmory}),
+
+    updateSpeed: (speed: number) =>
+        set({speed})
 }));
