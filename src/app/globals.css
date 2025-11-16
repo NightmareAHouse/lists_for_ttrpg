@@ -140,5 +140,6 @@ body {
     padding-left: 12px;
     min-height: 50px;
     height: auto;
+    justify-content: center;
 }
 

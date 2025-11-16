@@ -1,9 +1,8 @@
-'use client'
-
-import {Dispatch, SetStateAction, useState} from "react";
-import ProgressBar from "@/components/ProgressBar";
-import ModalHeader from "@/components/ModalHeader";
+import {Dispatch, SetStateAction} from "react";
 import {useCharacterStore} from "@/store/character";
+import LevelHeaderBlock from "@/components/Header/LevelHeaderBlock";
+import Rest from "@/components/Header/Rest";
+import Health from "@/components/Header/Health";
 
 type HeaderStatType = {
     isFullView: boolean;
@@ -11,11 +10,9 @@ type HeaderStatType = {
 };
 
 export default function HeaderStat({isFullView, setIsFullView}: HeaderStatType) {
-    const {currentLevel, experience, nextLevelExp, classArmory, speed, currentHp, maxHp} = useCharacterStore();
-    const [levelModalOpen, setLevelModalOpen] = useState(false);
+    const {classArmory, speed} = useCharacterStore();
 
     const onChangeView = () => setIsFullView(prev => !prev);
-    const onClick = () => setLevelModalOpen(!levelModalOpen);
 
     return (
         <div className='max-h-[150px]'>
@@ -31,13 +28,7 @@ export default function HeaderStat({isFullView, setIsFullView}: HeaderStatType) 
                         <div>Человек - Воин</div>
                     </div>
 
-                    <div className='flex flex-row header-border items-center' onClick={onClick}>
-                        <div className='text-sm text-center border-right min-w-[80px] p-1'>
-                            <span>Уровень: {currentLevel}</span>
-                        </div>
-
-                        <ProgressBar value={experience} maxValue={nextLevelExp}/>
-                    </div>
+                    <LevelHeaderBlock />
                 </div>
             </div>
 
@@ -49,8 +40,8 @@ export default function HeaderStat({isFullView, setIsFullView}: HeaderStatType) 
                     </div>
 
                     <div className='flex flex-row gap-2'>
-                        <span>Отдых</span>
-                        <span>Здоровье: {currentHp}/{maxHp}</span>
+                        <Rest />
+                        <Health />
                     </div>
                 </div>
 
@@ -58,8 +49,6 @@ export default function HeaderStat({isFullView, setIsFullView}: HeaderStatType) 
                     Кнопка
                 </div>
             </div>
-
-            <ModalHeader isOpen={levelModalOpen} setStateModal={setLevelModalOpen}/>
         </div>
     );
 }
