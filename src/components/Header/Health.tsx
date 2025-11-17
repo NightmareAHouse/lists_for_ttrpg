@@ -1,103 +1,126 @@
 'use client'
 
-import {useCharacterStore} from "@/store/character";
-import {useState} from "react";
-import Modal from "@/components/Modal";
-import Calculator from "@/components/Calculator";
+import {useCharacterStore} from '@/store/character'
+import {useState} from 'react'
+import Modal from '@/components/Modal'
+import Calculator from '@/components/Calculator'
 
 export default function Health() {
-    const {currentHp, maxHp, updateHp} = useCharacterStore();
+	const {currentHp, maxHp, updateHp, updateMaxHp, tempHp, updateTempHp} = useCharacterStore()
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [newHpValue, setNewHpValue] = useState<string>('0');
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [newHpValue, setNewHpValue] = useState<string>('0')
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setNewHpValue('0');
-    };
+	const openModal = () => setIsModalOpen(true)
+	const closeModal = () => {
+		setIsModalOpen(false)
+		setNewHpValue('0')
+	}
 
-    const clear = () => setNewHpValue('0');
+	const clear = () => setNewHpValue('0')
 
-    const parsedAmount = Math.max(0, Number(newHpValue) || 0);
+	const parsedAmount = Math.max(0, Number(newHpValue) || 0)
 
-    const addHp = () => {
-        if (parsedAmount <= 0) return;
+	const addTempHp = () => {
+		updateTempHp(Number(newHpValue))
+		updateMaxHp(maxHp + Number(newHpValue))
+		clear()
+	}
 
-        const remainingToMax = maxHp - currentHp;
-        if (remainingToMax <= 0) return;
+	const addHp = () => {
+		if (parsedAmount <= 0) return
 
-        const delta = Math.min(parsedAmount, remainingToMax);
-        updateHp(delta);
-        clear();
-    };
+		const remainingToMax = maxHp - currentHp
+		if (remainingToMax <= 0) return
 
-    const removeHp = () => {
-        if (parsedAmount <= 0) return;
+		const delta = Math.min(parsedAmount, remainingToMax)
+		updateHp(delta)
+		clear()
+	}
 
-        const minHp = -maxHp;
-        const remainingToMin = currentHp - minHp;
-        if (remainingToMin <= 0) return;
+	const removeHp = () => {
+		if (parsedAmount <= 0) return
 
-        const delta = Math.min(parsedAmount, remainingToMin);
-        updateHp(-delta);
-        clear();
-    };
+		const minHp = -maxHp
+		const remainingToMin = currentHp - minHp
+		if (remainingToMin <= 0) return
 
-    const isAddDisabled =
-        currentHp >= maxHp || parsedAmount <= 0;
+		const delta = Math.min(parsedAmount, remainingToMin)
 
-    const isRemoveDisabled =
-        currentHp <= -maxHp || parsedAmount <= 0;
+		updateHp(-delta)
+		clear()
+	}
 
-    return (
-        <div>
-            <span onClick={openModal} className="cursor-pointer">
-                Здоровье: {currentHp}/{maxHp}
-            </span>
+	const isAddDisabled = currentHp >= maxHp || parsedAmount <= 0
 
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <Calculator
-                    value={newHpValue}
-                    setValue={setNewHpValue}
-                    valueForProgressBar={currentHp}
-                    maxValueForProgressBar={maxHp}
-                >
-                    <div className="flex flex-row gap-6 justify-center mt-2">
+	const isRemoveDisabled = currentHp <= -maxHp || parsedAmount <= 0
 
-                        <button
-                            disabled={isAddDisabled}
-                            onClick={addHp}
-                            className="
+	return (
+		<div>
+			<span onClick={openModal} className='cursor-pointer'>
+				Здоровье: {tempHp ? `(${tempHp + currentHp})` : currentHp} / {maxHp}
+			</span>
+
+			<Modal isOpen={isModalOpen} onClose={closeModal}>
+				<Calculator
+					value={newHpValue}
+					setValue={setNewHpValue}
+					currentValue={tempHp ? tempHp + currentHp : currentHp}
+					maxCurrentValue={maxHp}
+					isShowProgressBar={false}
+				>
+					<div className='flex flex-col items-center w-full mt-2 gap-2'>
+						<div className='w-full'>
+							<button
+								onClick={addTempHp}
+								disabled={parsedAmount <= 0}
+								className='
                                 bg-[#50459587] hover:bg-[#504595b0] active:bg-[#504595cc]
                                 text-white font-semibold px-4 py-2 rounded-xl shadow-md
-                                transition-all active:scale-95
+                                transition-all active:scale-95 w-full
                                 disabled:bg-[#50459540] disabled:text-white/40
                                 disabled:cursor-not-allowed disabled:shadow-none
                                 disabled:hover:bg-[#50459540] disabled:active:scale-100
-                            "
-                        >
-                            Добавить HP
-                        </button>
+                            '
+							>
+								Добавить Временное HP
+							</button>
+						</div>
 
-                        <button
-                            disabled={isRemoveDisabled}
-                            onClick={removeHp}
-                            className="
+						<div className='flex flex-row gap-6 justify-center w-full'>
+							<button
+								disabled={isAddDisabled}
+								onClick={addHp}
+								className='
                                 bg-[#50459587] hover:bg-[#504595b0] active:bg-[#504595cc]
                                 text-white font-semibold px-4 py-2 rounded-xl shadow-md
-                                transition-all active:scale-95
+                                transition-all active:scale-95 w-full
                                 disabled:bg-[#50459540] disabled:text-white/40
                                 disabled:cursor-not-allowed disabled:shadow-none
                                 disabled:hover:bg-[#50459540] disabled:active:scale-100
-                            "
-                        >
-                            Убрать HP
-                        </button>
+                            '
+							>
+								Добавить HP
+							</button>
 
-                    </div>
-                </Calculator>
-            </Modal>
-        </div>
-    )
+							<button
+								disabled={isRemoveDisabled}
+								onClick={removeHp}
+								className='
+                                bg-[#50459587] hover:bg-[#504595b0] active:bg-[#504595cc]
+                                text-white font-semibold px-4 py-2 rounded-xl shadow-md
+                                transition-all active:scale-95 w-full
+                                disabled:bg-[#50459540] disabled:text-white/40
+                                disabled:cursor-not-allowed disabled:shadow-none
+                                disabled:hover:bg-[#50459540] disabled:active:scale-100
+                            '
+							>
+								Убрать HP
+							</button>
+						</div>
+					</div>
+				</Calculator>
+			</Modal>
+		</div>
+	)
 }

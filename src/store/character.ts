@@ -1,64 +1,64 @@
-import {create} from "zustand";
-import {newExpression} from "@babel/types";
+import { create } from 'zustand'
 
-type diceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20';
+type diceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20'
 
 interface CharacterState {
-    currentLevel: number;
-    maxHp: number;
-    currentHp: number;
-    experience: number;
-    nextLevelExp: number;
-    bonusMastery: number;
-    classArmory: number;
-    speed: number;
-    diceHeal?: diceType;
-    diceHealCount?: number;
+	currentLevel: number
+	maxHp: number
+	currentHp: number
+	tempHp: number
+	experience: number
+	nextLevelExp: number
+	bonusMastery: number
+	classArmory: number
+	speed: number
+	newLevelCount: number
+	diceHeal?: diceType
+	diceHealCount?: number
 
-    updateLevel: (level: number) => void;
-    updateMaxHp: (maxHp: number) => void;
-    updateHp: (hp: number) => void;
-    updateExperience: (newExperience: number) => void;
-    updateExpirienceOnNewLevel: (newExperience: number) => void;
-    updateNextLevelExp: (nextLevelExp: number) => void;
+	updateLevel: (level: number) => void
+	updateMaxHp: (maxHp: number) => void
+	updateHp: (hp: number) => void
+	updateTempHp: (tempHp: number) => void
+	updateNewLevelCount: () => void
+	updateExperience: (newExperience: number) => void
+	updateExpirienceOnNewLevel: (newExperience: number) => void
+	updateNextLevelExp: (nextLevelExp: number) => void
 }
 
 export const useCharacterStore = create<CharacterState>((set) => ({
-    currentLevel: 1,
-    bonusMastery: 2,
-    maxHp: 10,
-    currentHp: 10,
-    experience: 150,
-    nextLevelExp: 300,
-    classArmory: 10,
-    speed: 30,
-    diceHeal: 'd6',
-    diceHealCount: 2,
+	currentLevel: 1,
+	bonusMastery: 2,
+	maxHp: 10,
+	currentHp: 10,
+	tempHp: 0,
+	experience: 150,
+	nextLevelExp: 300,
+	classArmory: 10,
+	speed: 30,
+	diceHeal: 'd6',
+	diceHealCount: 2,
+	newLevelCount: 0,
 
-    updateLevel: (level) =>
-        set({currentLevel: level}),
+	updateLevel: (level) => set({ currentLevel: level }),
 
-    updateBonusMastery: (bonusMastery: number) =>
-        set({bonusMastery}),
+	updateNewLevelCount: () => set((state) => ({ newLevelCount: state.newLevelCount + 1 })),
 
-    updateMaxHp: (maxHp) =>
-        set({maxHp}),
+	updateBonusMastery: (bonusMastery: number) => set({ bonusMastery }),
 
-    updateHp: (hp) =>
-        set((state) => ({currentHp: state.currentHp + hp})),
+	updateMaxHp: (maxHp) => set({ maxHp }),
 
-    updateExperience: (newExperience) =>
-        set((state) => ({experience: state.experience + newExperience})),
+	updateHp: (hp) => set((state) => ({ currentHp: state.currentHp + hp })),
 
-    updateExpirienceOnNewLevel: (newExperience) =>
-        set({experience: newExperience}),
+	updateTempHp: (tempHp) => set((state) => ({ tempHp: state.tempHp + tempHp })),
 
-    updateNextLevelExp: (nextLevelExp) =>
-        set({nextLevelExp}),
+	updateExperience: (newExperience) => set((state) => ({ experience: state.experience + newExperience })),
 
-    updateClassArmory: (classArmory: number) =>
-        set({classArmory}),
+	updateExpirienceOnNewLevel: (newExperience) => set({ experience: newExperience }),
 
-    updateSpeed: (speed: number) =>
-        set({speed})
-}));
+	updateNextLevelExp: (nextLevelExp) => set({ nextLevelExp }),
+
+	updateClassArmory: (classArmory: number) => set({ classArmory }),
+
+	updateSpeed: (speed: number) => set({ speed }),
+}))
