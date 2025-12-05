@@ -15,7 +15,10 @@ type HeaderStatType = {
 
 export default function HeaderStat({ isFullView, setIsFullView }: HeaderStatType) {
 	const { speed } = useCharacterStore()
-	const { characterName, characterClass, characterSubClass, characterRace } = useCharacterInfoStore()
+	const { characterName, characterClass, characterSubClass, characterRace, characterAgility } = useCharacterInfoStore()
+
+	const calculateIniative = Math.floor((Number(characterAgility) - 10) / 2)
+	const initiative = calculateIniative >= 0 ? `+ ${calculateIniative}` : `${calculateIniative}`
 
 	const onChangeView = () => setIsFullView((prev) => !prev)
 
@@ -70,7 +73,7 @@ export default function HeaderStat({ isFullView, setIsFullView }: HeaderStatType
 					<div className='flex justify-between'>
 						<ButtonWithOutput data={''} label={'Вдохновление'} />
 						<ButtonWithOutput data={''} label={'Состояния'} />
-						<ButtonWithOutput data={''} label={'Инициатива'} />
+						<ButtonWithOutput data={initiative} label={'Инициатива'} />
 						<ButtonWithOutput data={''} label={'Смерть'} />
 					</div>
 				</div>

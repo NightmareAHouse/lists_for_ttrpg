@@ -1,21 +1,25 @@
 import Modal from '@/components/Modal'
-import {Dispatch, SetStateAction, useState} from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
+import { CharacterStatKey } from '@/store/type/store.type'
+import { useCharacterInfoStore } from '@/store/characterInfo'
 
 type ModalStatBlockType = {
+	statValue: CharacterStatKey
 	isModalOpen: boolean
 	mainStatValue: number
-	StatName: string
+	statName: string
 	setIsModalOpen: Dispatch<SetStateAction<boolean>>
-	setMainStatValue: Dispatch<SetStateAction<number>>
 }
 
 export default function ModalStatBlock({
+	statValue,
 	isModalOpen,
 	mainStatValue,
-	StatName,
+	statName,
 	setIsModalOpen,
-	setMainStatValue,
 }: ModalStatBlockType) {
+	const { updateCharacterStat } = useCharacterInfoStore()
+
 	const [updatedStatValue, setUpdatedStatValue] = useState(mainStatValue)
 
 	const minus = () => {
@@ -27,8 +31,8 @@ export default function ModalStatBlock({
 	}
 
 	const confirm = () => {
-		setMainStatValue(updatedStatValue)
 		setIsModalOpen(false)
+		updateCharacterStat(statValue, updatedStatValue.toString())
 	}
 
 	const cancel = () => {
@@ -45,7 +49,7 @@ export default function ModalStatBlock({
 			}}
 		>
 			<div className='flex flex-col text-center justify-center gap-5'>
-				<span>{StatName}</span>
+				<span>{statName}</span>
 
 				<div className='flex gap-5 text-center justify-center'>
 					<div onClick={minus}>Minus</div>

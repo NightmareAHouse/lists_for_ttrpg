@@ -15,12 +15,12 @@ export default function CampaignPage() {
 
 			<div className={'p-3 w-full ' + fullViewClass}>
 				<div className='h-full overflow-y-scroll overflow-x-hidden flex flex-col gap-2'>
-					<StatBlock name={'Сила'} />
-					<StatBlock name={'Ловкость'} />
-					<StatBlock name={'Телосложение'} />
-					<StatBlock name={'Интелект'} />
-					<StatBlock name={'Мудрость'} />
-					<StatBlock name={'Харизма'} />
+					<StatBlock name={'Сила'} value={'characterStrength'} />
+					<StatBlock name={'Ловкость'} value={'characterAgility'} />
+					<StatBlock name={'Телосложение'} value={'characterVitality'} />
+					<StatBlock name={'Интелект'} value={'characterIntellect'} />
+					<StatBlock name={'Мудрость'} value={'characterWisdom'} />
+					<StatBlock name={'Харизма'} value={'characterCharisma'} />
 				</div>
 			</div>
 		</div>

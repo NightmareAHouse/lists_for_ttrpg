@@ -1,20 +1,24 @@
 import { create } from 'zustand'
-import { characterClassType, characterRaceType } from '@/store/type/store.type'
+import { CharacterState } from '@/store/type/store.type'
 
-interface CharacterState {
-	characterName: string
-	characterClass: characterClassType
-	characterSubClass: string
-	characterRace: characterRaceType
-
-	updateCharacterData: (data: Partial<CharacterState>) => void
-}
-
-export const useCharacterInfoStore = create<CharacterState>((set) => ({
+export const useCharacterInfoStore = create<CharacterState>((set, get) => ({
 	characterName: 'Таумиэль',
 	characterClass: 'Воин',
 	characterSubClass: '',
 	characterRace: 'Человек',
 
+	characterStrength: '10',
+	characterAgility: '10',
+	characterVitality: '10',
+	characterIntellect: '10',
+	characterWisdom: '10',
+	characterCharisma: '10',
+
 	updateCharacterData: (data) => set(() => ({ ...data })),
+	updateCharacterStat: (key, value) =>
+		set((state) => ({
+			...state,
+			[key]: value, // НОВЫЙ объект, без мутаций
+		})),
+	getCharacterStat: (key) => get()[key],
 }))

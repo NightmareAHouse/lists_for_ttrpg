@@ -36,11 +36,11 @@ body {
 }
 
 .full-height-view {
-	height: calc(100dvh - 150px);
+	height: calc(100dvh - 246px);
 }
 
 .small-height-view {
-	height: calc(100dvh - 50px);
+	height: calc(100dvh - 87px);
 }
 
 .bg-progress-line {

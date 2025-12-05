@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import ModalStatBlock from '@/components/StatBlock/ModalStatBlock'
 import StatRow from '@/components/StatBlock/StatRow'
+import { useCharacterInfoStore } from '@/store/characterInfo'
+import { CharacterStatKey } from '@/store/type/store.type'
 
 const secondStat: Record<string, string[]> = {
 	Сила: ['Атлетика'],
@@ -14,10 +16,12 @@ const secondStat: Record<string, string[]> = {
 
 type StatBlock = {
 	name: string
+	value: CharacterStatKey
 }
 
-export default function StatBlock({ name }: StatBlock) {
-	const [mainStatValue, setMainStatValue] = useState(10)
+export default function StatBlock({ name, value }: StatBlock) {
+	const mainStatValue = useCharacterInfoStore((state) => Number(state[value]))
+
 	const [isModalOpen, setIsModalOpen] = useState(false)
 
 	const calculateStatValue = Math.floor((mainStatValue - 10) / 2)
@@ -46,11 +50,11 @@ export default function StatBlock({ name }: StatBlock) {
 			</div>
 
 			<ModalStatBlock
+				statValue={value}
 				isModalOpen={isModalOpen}
 				mainStatValue={mainStatValue}
-				StatName={name}
+				statName={name}
 				setIsModalOpen={setIsModalOpen}
-				setMainStatValue={setMainStatValue}
 			/>
 		</>
 	)
