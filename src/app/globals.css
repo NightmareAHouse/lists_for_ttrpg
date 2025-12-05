@@ -52,10 +52,10 @@ body {
 }
 
 .show-more-button {
-	position: absolute;
-	bottom: -13px;
-	left: 50%;
-	transform: translateX(-50%);
+    position: absolute;
+    bottom: -13px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .header-border {
@@ -76,7 +76,7 @@ body {
 }
 
 .text-sm {
-	font-size: 12px;
+	font-size: 14px;
 }
 
 .text-md {
@@ -146,4 +146,33 @@ body {
 	min-height: 50px;
 	height: auto;
 	justify-content: center;
+}
+
+.third-block {
+    overflow: hidden;
+    max-height: 0;
+    border-top: 1px solid #364153;
+    border-bottom: 1px solid #364153;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition:
+            max-height 0.35s ease,
+            opacity 0.35s ease,
+            transform 0.35s ease;
+}
+
+.third-block.open {
+    max-height: 120px; /* подбери под контент */
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+
+.button-with-output {
+    border: 1px solid #6d7abe;
+    border-radius: 12px;
+    width: 100%;
+    height: auto;
+    text-align: center;
 }

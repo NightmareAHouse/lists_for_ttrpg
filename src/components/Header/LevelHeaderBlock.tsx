@@ -2,11 +2,11 @@
 
 import ProgressBar from '@/components/ProgressBar'
 import LevelModal from '@/components/LevelModal'
-import {useCharacterStore} from '@/store/character'
-import {useState} from 'react'
+import { useCharacterStore } from '@/store/character'
+import { useState } from 'react'
 
 export default function LevelHeaderBlock() {
-	const {currentLevel, experience, nextLevelExp} = useCharacterStore()
+	const { currentLevel, experience, nextLevelExp } = useCharacterStore()
 	const [levelModalOpen, setLevelModalOpen] = useState(false)
 
 	const onClick = () => setLevelModalOpen(!levelModalOpen)

@@ -6,7 +6,7 @@ import Modal from '@/components/Modal'
 import Calculator from '@/components/Calculator'
 
 export default function Health() {
-	const { currentHp, maxHp, updateHp, updateMaxHp, tempHp, updateTempHp } = useCharacterStore()
+	const { currentHp, maxHp, updateHp, tempHp, updateTempHp } = useCharacterStore()
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [newHpValue, setNewHpValue] = useState<string>('0')

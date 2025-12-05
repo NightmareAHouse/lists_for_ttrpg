@@ -1,6 +1,5 @@
 import { create } from 'zustand'
-
-type diceType = 'd4' | 'd6' | 'd8' | 'd10' | 'd12' | 'd20'
+import { diceType } from '@/store/type/store.type'
 
 interface CharacterState {
 	currentLevel: number
